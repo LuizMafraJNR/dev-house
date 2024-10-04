@@ -1,5 +1,5 @@
 import Router from 'express';
-import SessionController from './api/controllers/SessionController';
+import SessionController from './api/controllers/SessionController'; muklt
 import HouseController from './api/controllers/HouseController';
 import multer from 'multer';
 import uploadConfig from './config/upload';
