@@ -36,9 +36,26 @@ class ReservaController {
        .exec();
        */
 
+       // Trazer os dados da House e do User na req.
        await reserva.populate(['house', 'user']);
-       
+
        return res.json(reserva);
+    }
+
+    async index(req, res) {
+        const { user_id } = req.headers;
+
+        // Vem os dados da House também
+        const reservas = await Reserva.find({user: user_id}).populate('house');
+
+        return res.json(reservas);
+    }
+
+    async destroy(req, res) {
+        const { reserva_id } = req.body;
+        await Reserva.findByIdAndDelete({ _id: reserva_id });
+
+        return res.send();
     }
 }
 

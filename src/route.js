@@ -25,6 +25,8 @@ routes.get('/dashboard', DashBoardController.show);
 
 // Reserva
 routes.post('/houses/:house_id/reserva', ReservaController.store);
+routes.get('/reservas', ReservaController.index);
+routes.delete('/reservas/cancelar', ReservaController.destroy);
 
 
 export default routes;
