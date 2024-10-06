@@ -19,6 +19,9 @@ build/
 # Arquivos de ambiente
 .env
 
+# uploads
+uploads/
+
 # Arquivos do sistema
 .DS_Store
 Thumbs.db
