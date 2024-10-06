@@ -1,6 +1,7 @@
 import { restart } from "nodemon";
 import House from "../../domain/models/House";
 import User from "../../domain/models/User";
+import * as yup from 'yup';
 
 class HouseController {
 
@@ -11,10 +12,20 @@ class HouseController {
     }
 
     async store(req,res) {
+        const schema = yup.object().shape({
+            description: yup.string().required(),
+            price: yup.number().required(),
+            location: yup.string().required(),
+            status: yup.boolean().required(),
+        });
 
         const {filename} = req.file;
         const {description, price,location,status} = req.body;
         const {user_id} = req.headers;
+
+        if(!(await schema.isValid(req.body))){
+            return res.status(400).json({error: 'Falha na validação'});
+        }
 
         const house = await House.create({
             user: user_id,
@@ -31,11 +42,21 @@ class HouseController {
     };
 
     async update(req,res) {
+        const schema = yup.object().shape({
+            description: yup.string().required(),
+            price: yup.number().required(),
+            location: yup.string().required(),
+            status: yup.boolean().required(),
+        });
+
         const { id }= req.params;
         const { filename } = req.file;
         const { description, price, location, status } = req.body;
         const { user_id } = req.headers;
 
+        if(!(await schema.isValid(req.body))){
+            return res.status(400).json({error: 'Falha na validação'});
+        }
         
         const user = await User.findById(user_id);
         const findHouse = await House.findById(id);
